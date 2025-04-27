@@ -18,26 +18,42 @@
 package com.frg.autocare.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.frg.autocare.dto.CarDTO;
 import com.frg.autocare.entities.Car;
 import com.frg.autocare.entities.Tool;
 import com.frg.autocare.repository.CarRepository;
+import com.frg.autocare.repository.ClientRepository;
+import com.frg.autocare.repository.MaintainerRepository;
 import com.frg.autocare.repository.ToolRepository;
 import com.frg.autocare.technical.ModelObject;
 import com.frg.autocare.technical.ModelObjectBuilder;
+import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
-public class CarService {
+public class CarService implements ICarService {
 
-  @Autowired private CarRepository carRepository;
+  private final CarRepository carRepository;
 
-  @Autowired private ToolRepository toolRepository;
+  private final ToolRepository toolRepository;
+
 
   private final ObjectMapper mapper = new ObjectMapper();
 
+  @Autowired
+  public CarService(
+      CarRepository carRepository,
+      ToolRepository toolRepository) {
+    this.carRepository = carRepository;
+    this.toolRepository = toolRepository;
+  }
+
+  @Override
   public String getAll() {
     List<Car> cars = carRepository.findAll();
     List<ModelObject> carList = new ArrayList<>();
@@ -75,5 +91,24 @@ public class CarService {
     } catch (Exception e) {
       throw new RuntimeException("Error converting to JSON", e);
     }
+  }
+
+  @Override
+  @Transactional
+  public String create(CarDTO dto) {
+
+    log.info("dto {}", dto);
+
+    var newCar = new Car();
+    newCar.setMake(dto.getMake());
+    newCar.setModel(dto.getModel());
+
+    log.info("newCar: {}", newCar);
+
+    var saved = carRepository.save(newCar);
+
+    var newCarBuilder = ModelObjectBuilder.createBuilder().addAttribute("id", saved.getId());
+
+    return saved.getId().toString();
   }
 }

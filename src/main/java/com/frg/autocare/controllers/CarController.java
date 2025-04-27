@@ -17,24 +17,37 @@
  */
 package com.frg.autocare.controllers;
 
+import com.frg.autocare.dto.CarDTO;
 import com.frg.autocare.services.CarService;
+import java.net.URI;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/cars")
 @RequiredArgsConstructor
-public class CarController {
+public class CarController implements ICarController {
 
   private final CarService carService;
 
-  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+  @Override
   public ResponseEntity<String> getComplexCars() {
     String jsonString = carService.getAll();
     return ResponseEntity.ok(jsonString);
+  }
+
+  @Override
+  public ResponseEntity<String> createCar(CarDTO dto) {
+
+    var id = carService.create(dto);
+    URI location =
+        ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
+
+    return ResponseEntity.created(location).build();
   }
 }
