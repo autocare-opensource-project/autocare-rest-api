@@ -77,24 +77,6 @@ public class ClientService implements IClientService {
     }
   }
 
-  @Override
-  public Map<String, Object> findById(Long id) {
-
-    log.info("Searching for client...");
-
-    Optional<Client> optionalClient = repository.findById(id);
-
-    if (!optionalClient.isPresent()) {
-      throw new EntityNotFoundException("Client not found!");
-    }
-
-    Client client = optionalClient.get();
-    Map<String, Object> serviceResponse = new HashMap<>();
-
-    serviceResponse.put("entity", client);
-
-    return serviceResponse;
-  }
 
   @Override
   public Map<String, Object> createClient(ClientDTO dto) throws ClientServiceException {
