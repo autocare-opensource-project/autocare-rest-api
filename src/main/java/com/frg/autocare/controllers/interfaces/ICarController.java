@@ -1,4 +1,4 @@
-package com.frg.autocare.controllers;
+package com.frg.autocare.controllers.interfaces;
 
 import com.frg.autocare.dto.CarDTO;
 import jakarta.validation.Valid;

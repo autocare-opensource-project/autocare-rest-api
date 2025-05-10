@@ -1,5 +1,6 @@
 package com.frg.autocare.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,10 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseCarDTO {
+public class ClientDTO {
+  private Long id;
 
-  private String model;
-  private String make;
-  private String client;
-  private String maintainer;
+  @NotNull(message = "name cannot be null") private String name;
 }

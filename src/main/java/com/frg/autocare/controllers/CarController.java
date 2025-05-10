@@ -17,9 +17,12 @@
  */
 package com.frg.autocare.controllers;
 
+import com.frg.autocare.controllers.interfaces.ICarController;
 import com.frg.autocare.dto.CarDTO;
-import com.frg.autocare.services.CarService;
+import com.frg.autocare.services.exceptions.CarServiceException;
+import com.frg.autocare.services.interfaces.ICarService;
 import java.net.URI;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -33,21 +36,37 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequiredArgsConstructor
 public class CarController implements ICarController {
 
-  private final CarService carService;
+  private final ICarService carService;
 
   @Override
   public ResponseEntity<String> getComplexCars() {
-    String jsonString = carService.getAll();
-    return ResponseEntity.ok(jsonString);
+    String jsonString = null;
+    try {
+      jsonString = carService.getAll();
+      return ResponseEntity.ok(jsonString);
+    } catch (CarServiceException e) {
+      log.error("Error: {}", e.getMessage());
+      return ResponseEntity.internalServerError().build();
+    }
   }
 
   @Override
   public ResponseEntity<String> createCar(CarDTO dto) {
 
-    var id = carService.create(dto);
-    URI location =
-        ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
+    Map<String, Object> serviceResponse = null;
+    try {
 
-    return ResponseEntity.created(location).build();
+      serviceResponse = carService.create(dto);
+      var id = (String) serviceResponse.get("id");
+      var body = (String) serviceResponse.get("body");
+
+      URI location =
+          ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
+
+      return ResponseEntity.created(location).body(body);
+    } catch (CarServiceException e) {
+      log.error("Error: {}", e.getMessage());
+      return ResponseEntity.internalServerError().build();
+    }
   }
 }
