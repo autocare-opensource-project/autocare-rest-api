@@ -111,18 +111,6 @@ public class CarService implements ICarService {
   }
 
   @Override
-  public Map<String, Object> getAllByClientId(Long clientId) {
-
-    log.info("Searching for cars...");
-    List<Car> cars = carRepository.findCarsByClientId(clientId);
-
-    Map<String, Object> serviceResponse = new HashMap<>();
-    serviceResponse.put("entities", cars);
-
-    return serviceResponse;
-  }
-
-  @Override
   @Transactional
   public Map<String, Object> create(CarDTO dto) throws CarServiceException {
 

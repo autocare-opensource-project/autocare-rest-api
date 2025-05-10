@@ -8,7 +8,5 @@ public interface ICarService {
 
   String getAll() throws CarServiceException;
 
-  Map<String, Object> getAllByClientId(Long clientId);
-
   Map<String, Object> create(CarDTO dto) throws CarServiceException;
 }
