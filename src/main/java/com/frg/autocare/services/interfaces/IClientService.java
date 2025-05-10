@@ -1,7 +1,7 @@
 package com.frg.autocare.services.interfaces;
 
 import com.frg.autocare.dto.ClientDTO;
-import com.frg.autocare.services.exceptions.CarServiceException;
+import com.frg.autocare.services.exceptions.ClientServiceException;
 import java.util.Map;
 
 public interface IClientService {
@@ -10,5 +10,5 @@ public interface IClientService {
 
   Map<String, Object> findById(Long id);
 
-  Map<String, Object> createClient(ClientDTO dto) throws CarServiceException;
+  Map<String, Object> createClient(ClientDTO dto) throws ClientServiceException;
 }

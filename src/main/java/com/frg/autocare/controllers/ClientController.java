@@ -2,7 +2,7 @@ package com.frg.autocare.controllers;
 
 import com.frg.autocare.controllers.interfaces.IClientController;
 import com.frg.autocare.dto.ClientDTO;
-import com.frg.autocare.services.exceptions.CarServiceException;
+import com.frg.autocare.services.exceptions.ClientServiceException;
 import com.frg.autocare.services.interfaces.IClientService;
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +34,7 @@ public class ClientController implements IClientController {
 
       return ResponseEntity.created(location).body(body);
 
-    } catch (CarServiceException e) {
+    } catch (ClientServiceException e) {
       return ResponseEntity.internalServerError().build();
     }
   }

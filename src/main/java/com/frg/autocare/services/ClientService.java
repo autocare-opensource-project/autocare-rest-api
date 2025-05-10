@@ -5,7 +5,7 @@ import com.frg.autocare.dto.ClientDTO;
 import com.frg.autocare.entities.Car;
 import com.frg.autocare.entities.Client;
 import com.frg.autocare.repository.ClientRepository;
-import com.frg.autocare.services.exceptions.CarServiceException;
+import com.frg.autocare.services.exceptions.ClientServiceException;
 import com.frg.autocare.services.interfaces.IBusinessService;
 import com.frg.autocare.services.interfaces.IClientService;
 import com.frg.autocare.technical.ModelObject;
@@ -97,7 +97,7 @@ public class ClientService implements IClientService {
   }
 
   @Override
-  public Map<String, Object> createClient(ClientDTO dto) throws CarServiceException {
+  public Map<String, Object> createClient(ClientDTO dto) throws ClientServiceException {
 
     String name = dto.getName();
     Client newClient = new Client();
@@ -115,7 +115,7 @@ public class ClientService implements IClientService {
       serviceResponse.put("body", valueAsString);
       return serviceResponse;
     } catch (Exception e) {
-      throw new CarServiceException("Error converting to JSON", e);
+      throw new ClientServiceException("Error converting to JSON", e);
     }
   }
 }
