@@ -17,24 +17,41 @@
  */
 package com.frg.autocare.controllers;
 
+import com.frg.autocare.dto.CarDTO;
 import com.frg.autocare.services.CarService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/cars")
+@RequestMapping("/api/v1/cars")
 @RequiredArgsConstructor
+@Tag(name = "Cars", description = "Car management APIs")
 public class CarController {
 
   private final CarService carService;
 
-  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<String> getComplexCars() {
-    String jsonString = carService.getAll();
-    return ResponseEntity.ok(jsonString);
+  @GetMapping
+  @Operation(
+      summary = "Get all cars",
+      description = "Retrieve a list of all cars with their details")
+  @ApiResponse(responseCode = "200", description = "List of cars retrieved successfully")
+  public ResponseEntity<List<CarDTO>> getAllCars() {
+    return ResponseEntity.ok(carService.getAllCars());
+  }
+
+  @GetMapping("/{id}")
+  @Operation(summary = "Get car by ID", description = "Retrieve a car by its ID")
+  @ApiResponse(responseCode = "200", description = "Car retrieved successfully")
+  @ApiResponse(responseCode = "404", description = "Car not found")
+  public ResponseEntity<CarDTO> getCarById(@PathVariable Long id) {
+    return ResponseEntity.ok(carService.getCarById(id));
   }
 }

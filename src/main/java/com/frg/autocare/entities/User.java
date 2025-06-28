@@ -18,18 +18,33 @@
 package com.frg.autocare.entities;
 
 import com.frg.autocare.constants.IDEs;
+import com.frg.autocare.enums.Role;
 import jakarta.annotation.Generated;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Getter
@@ -37,13 +52,81 @@ import org.hibernate.proxy.HibernateProxy;
 @ToString
 @NoArgsConstructor
 @Table(name = "user_account")
-public class User {
+@AllArgsConstructor
+@Builder
+public class User implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @NotBlank(message = "Name is required")
+  @Size(min = 2, max = 100, message = "Name must be between 2 and 100 characters")
   private String name;
+
+  @Email(message = "Email should be valid")
+  @NotBlank(message = "Email is required")
+  @Column(unique = true)
   private String email;
+
+  @NotBlank(message = "Password is required")
+  @Size(min = 8, message = "Password must be at least 8 characters")
+  @ToString.Exclude
+  private String password;
+
+  @Enumerated(EnumType.STRING)
+  private Role role = Role.CUSTOMER;
+
+  private boolean enabled = true;
+  private boolean accountNonExpired = true;
+  private boolean accountNonLocked = true;
+  private boolean credentialsNonExpired = true;
+
+  @Column(name = "created_at")
+  private LocalDateTime createdAt;
+
+  @Column(name = "updated_at")
+  private LocalDateTime updatedAt;
+
+  @PrePersist
+  protected void onCreate() {
+    createdAt = LocalDateTime.now();
+    updatedAt = LocalDateTime.now();
+  }
+
+  @PreUpdate
+  protected void onUpdate() {
+    updatedAt = LocalDateTime.now();
+  }
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return role.getAuthorities();
+  }
+
+  @Override
+  public String getUsername() {
+    return email;
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return accountNonExpired;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return accountNonLocked;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return credentialsNonExpired;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return enabled;
+  }
 
   @Override
   @Generated(IDEs.INTELLIJ_IDEA)

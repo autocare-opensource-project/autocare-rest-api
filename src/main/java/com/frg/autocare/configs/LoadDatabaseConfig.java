@@ -22,19 +22,25 @@ import com.frg.autocare.entities.Client;
 import com.frg.autocare.entities.Maintainer;
 import com.frg.autocare.entities.Tool;
 import com.frg.autocare.entities.User;
+import com.frg.autocare.enums.Role;
 import com.frg.autocare.repository.CarRepository;
 import com.frg.autocare.repository.ClientRepository;
 import com.frg.autocare.repository.MaintainerRepository;
 import com.frg.autocare.repository.ToolRepository;
 import com.frg.autocare.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @Profile("demo")
+@RequiredArgsConstructor
 public class LoadDatabaseConfig {
+
+  private final PasswordEncoder passwordEncoder;
 
   @Bean
   CommandLineRunner initDatabase(
@@ -47,6 +53,8 @@ public class LoadDatabaseConfig {
       User user1 = new User();
       user1.setName("John Doe");
       user1.setEmail("john.doe@example.com");
+      user1.setPassword(passwordEncoder.encode("password123"));
+      user1.setRole(Role.ADMIN);
       userRepository.save(user1);
 
       Client client1 = new Client();
