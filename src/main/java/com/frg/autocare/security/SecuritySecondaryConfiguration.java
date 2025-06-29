@@ -17,21 +17,6 @@
  */
 package com.frg.autocare.security;
 
-import static com.frg.autocare.enums.Permission.ADMIN_CREATE;
-import static com.frg.autocare.enums.Permission.ADMIN_DELETE;
-import static com.frg.autocare.enums.Permission.ADMIN_READ;
-import static com.frg.autocare.enums.Permission.ADMIN_UPDATE;
-import static com.frg.autocare.enums.Permission.MANAGER_CREATE;
-import static com.frg.autocare.enums.Permission.MANAGER_DELETE;
-import static com.frg.autocare.enums.Permission.MANAGER_READ;
-import static com.frg.autocare.enums.Permission.MANAGER_UPDATE;
-import static com.frg.autocare.enums.Role.ADMIN;
-import static com.frg.autocare.enums.Role.MANAGER;
-import static org.springframework.http.HttpMethod.DELETE;
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.http.HttpMethod.PUT;
-
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import javax.crypto.spec.SecretKeySpec;
 import lombok.RequiredArgsConstructor;
@@ -67,47 +52,20 @@ public class SecuritySecondaryConfiguration {
   private String jwtSecret;
 
   @Bean
+  @SuppressWarnings("squid:S4507")
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(
             req ->
                 req.requestMatchers(
                         "/api/v1/auth/**",
-                        "/.well-known/jwks.json",
-                        "/v2/api-docs",
-                        "/v3/api-docs",
-                        "/v3/api-docs/**",
-                        "/swagger-resources",
                         "/swagger-resources/**",
-                        "/configuration/ui",
-                        "/configuration/security",
                         "/swagger-ui/**",
-                        "/webjars/**",
                         "/swagger-ui.html",
                         "/api-docs/**",
                         "/h2-console/**",
                         "/actuator/**")
                     .permitAll()
-                    .requestMatchers("/api/v1/management/**")
-                    .hasAnyRole(ADMIN.name(), MANAGER.name())
-                    .requestMatchers(GET, "/api/v1/management/**")
-                    .hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name())
-                    .requestMatchers(POST, "/api/v1/management/**")
-                    .hasAnyAuthority(ADMIN_CREATE.name(), MANAGER_CREATE.name())
-                    .requestMatchers(PUT, "/api/v1/management/**")
-                    .hasAnyAuthority(ADMIN_UPDATE.name(), MANAGER_UPDATE.name())
-                    .requestMatchers(DELETE, "/api/v1/management/**")
-                    .hasAnyAuthority(ADMIN_DELETE.name(), MANAGER_DELETE.name())
-                    .requestMatchers("/api/v1/admin/**")
-                    .hasRole(ADMIN.name())
-                    .requestMatchers(GET, "/api/v1/admin/**")
-                    .hasAuthority(ADMIN_READ.name())
-                    .requestMatchers(POST, "/api/v1/admin/**")
-                    .hasAuthority(ADMIN_CREATE.name())
-                    .requestMatchers(PUT, "/api/v1/admin/**")
-                    .hasAuthority(ADMIN_UPDATE.name())
-                    .requestMatchers(DELETE, "/api/v1/admin/**")
-                    .hasAuthority(ADMIN_DELETE.name())
                     .anyRequest()
                     .authenticated())
         .sessionManagement(

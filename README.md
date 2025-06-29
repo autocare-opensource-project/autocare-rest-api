@@ -70,7 +70,6 @@ The API provides an authentication endpoint at `/api/v1/auth`.
     - Provide the required credentials (e.g., username and password) in the request body.
     - Execute the request to receive an authentication token in the response.
 
-
 5. **Check Database**:
 
 Currently, there is only the [H2 Database](https://www.h2database.com/html/main.html) to demonstrate the app while in DEV mode. SpringBoot autoconfigures H2 database :

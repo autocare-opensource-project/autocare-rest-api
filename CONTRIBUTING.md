@@ -22,8 +22,6 @@ Thank you for considering contributing to the **AutoCare REST API** ! By partici
 2. Set up the project by following the instructions in the [README](./README.md) file (check **Technology Stack** and **Getting Started** sections)
 3. Ensure that the project builds successfully by running `./mvnw clean install`.
 
-_REMINDER: If you'd like to have a friendly-chat assistance, feel free to join us on [Together Java Discord server](https://discord.com/channels/272761734820003841/1265407633758883870). We have a dedicated channel made specially to collaborate on this project!_ 
-
 ## Reporting Issues
 
 If you encounter a bug, please open an [issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/about-issues#about-issues) and provide enough details.

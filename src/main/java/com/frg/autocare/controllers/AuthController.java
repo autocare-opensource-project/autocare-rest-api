@@ -39,7 +39,7 @@ public class AuthController {
 
   private final AuthService service;
 
-  @PostMapping("/authenticate")
+  @PostMapping
   @Operation(
       summary = "Authenticate user",
       description = "Authenticate user with email and password")

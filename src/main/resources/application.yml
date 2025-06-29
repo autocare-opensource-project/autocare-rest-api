@@ -41,13 +41,6 @@ spring:
         jwt:
           issuer-uri: http://localhost:8080
 
-# Application Configuration
-app:
-  jwt:
-    secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970} # Default secret key, can be overridden by environment variable
-    expiration: ${JWT_EXPIRATION:86400000} # 24 hours
-    refresh-expiration: ${JWT_REFRESH_EXPIRATION:604800000} # 7 days
-
 # OpenAPI Documentation
 springdoc:
   api-docs:
@@ -59,6 +52,8 @@ springdoc:
     tryItOutEnabled: true
     filter: true
   show-actuator: true
+  enable-spring-security: true
+  show-login-endpoint: true
 
 # Logging Configuration
 logging:
@@ -78,3 +73,8 @@ management:
     health:
       show-details: when-authorized
 
+# Custom Configuration
+app:
+  jwt:
+    secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970} # Default secret key, can be overridden by environment variable
+    expiration: ${JWT_EXPIRATION:86400000} # 24 hours

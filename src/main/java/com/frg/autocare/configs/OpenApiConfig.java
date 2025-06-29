@@ -20,7 +20,6 @@ package com.frg.autocare.configs;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
-import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -30,22 +29,15 @@ import io.swagger.v3.oas.annotations.servers.Server;
 @OpenAPIDefinition(
     info =
         @Info(
-            contact =
-                @Contact(
-                    name = "AutoCare Team",
-                    email = "contact@autocare.com",
-                    url = "https://autocare.com"),
             description = "OpenAPI documentation for AutoCare REST API",
             title = "AutoCare REST API",
             version = "1.0",
             license =
                 @License(
                     name = "GNU Affero General Public License v3.0",
-                    url = "https://www.gnu.org/licenses/agpl-3.0.en.html"),
-            termsOfService = "Terms of service"),
+                    url = "https://www.gnu.org/licenses/agpl-3.0.en.html")),
     servers = {
       @Server(description = "Local ENV", url = "http://localhost:8080"),
-      @Server(description = "PROD ENV", url = "https://autocare.com")
     },
     security = {@SecurityRequirement(name = "bearerAuth")})
 @SecurityScheme(
