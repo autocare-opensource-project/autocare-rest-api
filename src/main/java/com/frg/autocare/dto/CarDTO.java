@@ -18,37 +18,15 @@
 package com.frg.autocare.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * Data Transfer Object for Car entity.
  */
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Schema(description = "Car information")
-public class CarDTO {
-
-  @Schema(description = "Car ID")
-  private Long id;
-
-  @Schema(description = "Car model", example = "Corolla")
-  private String model;
-
-  @Schema(description = "Car make", example = "Toyota")
-  private String make;
-
-  @Schema(description = "Client name", example = "John Doe")
-  private String clientName;
-
-  @Schema(description = "Maintainer name", example = "Jane Smith")
-  private String maintainerName;
-
-  @Schema(description = "Tools used for maintenance")
-  private List<ToolDTO> tools;
-}
+public record CarDTO(
+    @Schema(description = "Car ID") Long id,
+    @Schema(description = "Car model", example = "Corolla") String model,
+    @Schema(description = "Car make", example = "Toyota") String make,
+    @Schema(description = "Client name", example = "John Doe") String clientName,
+    @Schema(description = "Maintainer name", example = "Jane Smith") String maintainerName,
+    @Schema(description = "List of tools") java.util.List<com.frg.autocare.dto.ToolDTO> tools) {}

@@ -67,17 +67,11 @@ public class CarService {
                 .collect(Collectors.toList())
             : List.of();
 
-    return CarDTO.builder()
-        .id(car.getId())
-        .model(car.getModel())
-        .make(car.getMake())
-        .clientName(clientName)
-        .maintainerName(maintainerName)
-        .tools(tools)
-        .build();
+    return new CarDTO(
+        car.getId(), car.getModel(), car.getMake(), clientName, maintainerName, tools);
   }
 
   private ToolDTO mapToToolDTO(Tool tool) {
-    return ToolDTO.builder().id(tool.getId()).name(tool.getName()).build();
+    return new ToolDTO(tool.getId(), tool.getName());
   }
 }

@@ -18,24 +18,11 @@
 package com.frg.autocare.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * Data Transfer Object for Tool entity.
  */
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Schema(description = "Tool information")
-public class ToolDTO {
-
-  @Schema(description = "Tool ID")
-  private Long id;
-
-  @Schema(description = "Tool name", example = "Wrench")
-  private String name;
-}
+public record ToolDTO(
+    @Schema(description = "Tool ID") Long id,
+    @Schema(description = "Tool name", example = "Wrench") String name) {}

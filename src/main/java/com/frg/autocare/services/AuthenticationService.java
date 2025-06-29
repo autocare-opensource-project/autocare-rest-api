@@ -45,42 +45,36 @@ public class AuthenticationService {
 
   public AuthenticationResponse register(RegisterRequest request) {
     // Check if user already exists
-    if (repository.findByEmail(request.getEmail()).isPresent()) {
-      throw new ResourceAlreadyExistsException("User", "email", request.getEmail());
+    if (repository.findByEmail(request.email()).isPresent()) {
+      throw new ResourceAlreadyExistsException("User", "email", request.email());
     }
 
     var user =
         User.builder()
-            .name(request.getName())
-            .email(request.getEmail())
-            .password(passwordEncoder.encode(request.getPassword()))
-            .role(request.getRole())
+            .name(request.name())
+            .email(request.email())
+            .password(passwordEncoder.encode(request.password()))
+            .role(request.role())
             .build();
 
     repository.save(user);
 
     var jwtToken = jwtService.generateToken(user);
 
-    return AuthenticationResponse.builder()
-        .accessToken(jwtToken)
-        .expiresIn(jwtExpiration / 1000)
-        .build();
+    return new AuthenticationResponse(jwtToken, "Bearer", jwtExpiration / 1000);
   }
 
   public AuthenticationResponse authenticate(AuthenticationRequest request) {
     authenticationManager.authenticate(
-        new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+        new UsernamePasswordAuthenticationToken(request.email(), request.password()));
 
     var user =
         repository
-            .findByEmail(request.getEmail())
-            .orElseThrow(() -> new ResourceNotFoundException("User", "email", request.getEmail()));
+            .findByEmail(request.email())
+            .orElseThrow(() -> new ResourceNotFoundException("User", "email", request.email()));
 
     var jwtToken = jwtService.generateToken(user);
 
-    return AuthenticationResponse.builder()
-        .accessToken(jwtToken)
-        .expiresIn(jwtExpiration / 1000)
-        .build();
+    return new AuthenticationResponse(jwtToken, "Bearer", jwtExpiration / 1000);
   }
 }
