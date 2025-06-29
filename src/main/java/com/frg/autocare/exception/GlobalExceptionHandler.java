@@ -40,12 +40,6 @@ public class GlobalExceptionHandler {
     return createErrorResponse(ex, HttpStatus.NOT_FOUND, request);
   }
 
-  @ExceptionHandler(ResourceAlreadyExistsException.class)
-  public ResponseEntity<ErrorResponse> handleResourceAlreadyExistsException(
-      ResourceAlreadyExistsException ex, WebRequest request) {
-    return createErrorResponse(ex, HttpStatus.CONFLICT, request);
-  }
-
   @ExceptionHandler(BadCredentialsException.class)
   public ResponseEntity<ErrorResponse> handleBadCredentialsException(
       BadCredentialsException ex, WebRequest request) {

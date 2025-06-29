@@ -17,10 +17,9 @@
  */
 package com.frg.autocare.controllers;
 
-import com.frg.autocare.dto.auth.AuthenticationRequest;
-import com.frg.autocare.dto.auth.AuthenticationResponse;
-import com.frg.autocare.dto.auth.RegisterRequest;
-import com.frg.autocare.services.AuthenticationService;
+import com.frg.autocare.dto.auth.AuthRequest;
+import com.frg.autocare.dto.auth.AuthResponse;
+import com.frg.autocare.services.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -38,19 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Authentication", description = "Authentication management APIs")
 public class AuthController {
 
-  private final AuthenticationService service;
-
-  @PostMapping("/register")
-  @Operation(
-      summary = "Register a new user",
-      description = "Register a new user account with email and password")
-  @ApiResponse(responseCode = "200", description = "User registered successfully")
-  @ApiResponse(responseCode = "400", description = "Invalid input data")
-  @ApiResponse(responseCode = "409", description = "Email already exists")
-  public ResponseEntity<AuthenticationResponse> register(
-      @Valid @RequestBody RegisterRequest request) {
-    return ResponseEntity.ok(service.register(request));
-  }
+  private final AuthService service;
 
   @PostMapping("/authenticate")
   @Operation(
@@ -58,8 +45,7 @@ public class AuthController {
       description = "Authenticate user with email and password")
   @ApiResponse(responseCode = "200", description = "Authentication successful")
   @ApiResponse(responseCode = "401", description = "Invalid credentials")
-  public ResponseEntity<AuthenticationResponse> authenticate(
-      @Valid @RequestBody AuthenticationRequest request) {
+  public ResponseEntity<AuthResponse> authenticate(@Valid @RequestBody AuthRequest request) {
     return ResponseEntity.ok(service.authenticate(request));
   }
 }

@@ -1,5 +1,5 @@
 /**
- * AutoCare REST API - Resource already exists exception.
+ * AutoCare REST API - Authentication response DTO.
  * Copyright (C) 2024  AutoCare REST API original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,17 +15,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this application.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.frg.autocare.exception;
+package com.frg.autocare.dto.auth;
 
-public class ResourceAlreadyExistsException extends RuntimeException {
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-  private static final long serialVersionUID = 1L;
-
-  public ResourceAlreadyExistsException(String message) {
-    super(message);
-  }
-
-  public ResourceAlreadyExistsException(String resourceName, String fieldName, Object fieldValue) {
-    super(String.format("%s already exists with %s: '%s'", resourceName, fieldName, fieldValue));
-  }
-}
+@Schema(description = "Authentication response")
+public record AuthResponse(
+    @JsonProperty("access_token") @Schema(description = "JWT access token") String accessToken,
+    @JsonProperty("token_type") @Schema(description = "Token type", example = "Bearer")
+        String tokenType,
+    @JsonProperty("expires_in") @Schema(description = "Token expiration time in seconds")
+        Long expiresIn) {}

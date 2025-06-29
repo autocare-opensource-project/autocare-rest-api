@@ -17,54 +17,28 @@
  */
 package com.frg.autocare.services;
 
-import com.frg.autocare.dto.auth.AuthenticationRequest;
-import com.frg.autocare.dto.auth.AuthenticationResponse;
-import com.frg.autocare.dto.auth.RegisterRequest;
-import com.frg.autocare.entities.User;
-import com.frg.autocare.exception.ResourceAlreadyExistsException;
+import com.frg.autocare.dto.auth.AuthRequest;
+import com.frg.autocare.dto.auth.AuthResponse;
 import com.frg.autocare.exception.ResourceNotFoundException;
 import com.frg.autocare.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationService {
+public class AuthService {
 
   private final UserRepository repository;
-  private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
 
   @Value("${app.jwt.expiration}")
   private long jwtExpiration;
 
-  public AuthenticationResponse register(RegisterRequest request) {
-    // Check if user already exists
-    if (repository.findByEmail(request.email()).isPresent()) {
-      throw new ResourceAlreadyExistsException("User", "email", request.email());
-    }
-
-    var user =
-        User.builder()
-            .name(request.name())
-            .email(request.email())
-            .password(passwordEncoder.encode(request.password()))
-            .role(request.role())
-            .build();
-
-    repository.save(user);
-
-    var jwtToken = jwtService.generateToken(user);
-
-    return new AuthenticationResponse(jwtToken, "Bearer", jwtExpiration / 1000);
-  }
-
-  public AuthenticationResponse authenticate(AuthenticationRequest request) {
+  public AuthResponse authenticate(AuthRequest request) {
     authenticationManager.authenticate(
         new UsernamePasswordAuthenticationToken(request.email(), request.password()));
 
@@ -75,6 +49,6 @@ public class AuthenticationService {
 
     var jwtToken = jwtService.generateToken(user);
 
-    return new AuthenticationResponse(jwtToken, "Bearer", jwtExpiration / 1000);
+    return new AuthResponse(jwtToken, "Bearer", jwtExpiration / 1000);
   }
 }
