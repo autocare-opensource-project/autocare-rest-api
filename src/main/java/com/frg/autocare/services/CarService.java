@@ -17,63 +17,61 @@
  */
 package com.frg.autocare.services;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.frg.autocare.dto.CarDTO;
+import com.frg.autocare.dto.ToolDTO;
 import com.frg.autocare.entities.Car;
 import com.frg.autocare.entities.Tool;
+import com.frg.autocare.exception.ResourceNotFoundException;
 import com.frg.autocare.repository.CarRepository;
 import com.frg.autocare.repository.ToolRepository;
-import com.frg.autocare.technical.ModelObject;
-import com.frg.autocare.technical.ModelObjectBuilder;
-import java.util.ArrayList;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class CarService {
 
-  @Autowired private CarRepository carRepository;
+  private final CarRepository carRepository;
+  private final ToolRepository toolRepository;
 
-  @Autowired private ToolRepository toolRepository;
-
-  private final ObjectMapper mapper = new ObjectMapper();
-
-  public String getAll() {
+  @Transactional(readOnly = true)
+  public List<CarDTO> getAllCars() {
     List<Car> cars = carRepository.findAll();
-    List<ModelObject> carList = new ArrayList<>();
 
-    for (Car car : cars) {
-      ModelObjectBuilder carBuilder =
-          ModelObjectBuilder.createBuilder()
-              .addAttribute("id", car.getId())
-              .addAttribute("model", car.getModel())
-              .addAttribute("make", car.getMake())
-              .addAttribute("clientName", car.getClient().getName())
-              .addAttribute("maintainerName", car.getMaintainer().getName());
+    return cars.stream().map(this::mapToCarDTO).collect(Collectors.toList());
+  }
 
-      List<Tool> tools = toolRepository.findToolsByMaintainerId(car.getMaintainer().getId());
-      ModelObject[] toolBuilders =
-          tools.stream()
-              .map(
-                  tool ->
-                      ModelObjectBuilder.createBuilder()
-                          .addAttribute("id", tool.getId())
-                          .addAttribute("name", tool.getName())
-                          .build())
-              .toArray(ModelObject[]::new);
+  @Transactional(readOnly = true)
+  public CarDTO getCarById(Long id) {
+    Car car =
+        carRepository
+            .findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Car", "id", id));
 
-      carBuilder.addArrayAttribute("tools", toolBuilders);
+    return mapToCarDTO(car);
+  }
 
-      ModelObject finalBuilder =
-          ModelObjectBuilder.createBuilder().addAttribute("car", carBuilder.build()).build();
+  private CarDTO mapToCarDTO(Car car) {
+    // Safely handle potential null references
+    String clientName = car.getClient() != null ? car.getClient().getName() : null;
+    String maintainerName = car.getMaintainer() != null ? car.getMaintainer().getName() : null;
+    Long maintainerId = car.getMaintainer() != null ? car.getMaintainer().getId() : null;
 
-      carList.add(finalBuilder);
-    }
+    List<ToolDTO> tools =
+        maintainerId != null
+            ? toolRepository.findToolsByMaintainerId(maintainerId).stream()
+                .map(this::mapToToolDTO)
+                .collect(Collectors.toList())
+            : List.of();
 
-    try {
-      return this.mapper.writeValueAsString(carList);
-    } catch (Exception e) {
-      throw new RuntimeException("Error converting to JSON", e);
-    }
+    return new CarDTO(
+        car.getId(), car.getModel(), car.getMake(), clientName, maintainerName, tools);
+  }
+
+  private ToolDTO mapToToolDTO(Tool tool) {
+    return new ToolDTO(tool.getId(), tool.getName());
   }
 }

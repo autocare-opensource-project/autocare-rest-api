@@ -3,10 +3,10 @@
 [![Code Analysis](https://github.com/firasrg/auto-care/actions/workflows/code-analysis.yaml/badge.svg)](https://github.com/firasrg/auto-care/actions/workflows/code-analysis.yaml)
 [![java-version](https://img.shields.io/badge/Java-17-f0fc03)](https://img.shields.io/badge/Java-17-f0fc03)
 
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=firasrg_car-service-rest-api&metric=bugs)](https://sonarcloud.io/summary/new_code?id=firasrg_car-service-rest-api)
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=firasrg_car-service-rest-api&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=firasrg_car-service-rest-api)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=firasrg_car-service-rest-api&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=firasrg_car-service-rest-api)
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=firasrg_car-service-rest-api&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=firasrg_car-service-rest-api)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=firasrg_autocare-rest-api&metric=bugs)](https://sonarcloud.io/summary/new_code?id=firasrg_autocare-rest-api)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=firasrg_autocare-rest-api&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=firasrg_autocare-rest-api)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=firasrg_autocare-rest-api&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=firasrg_autocare-rest-api)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=firasrg_autocare-rest-api&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=firasrg_autocare-rest-api)
 
 ## Overview
 
@@ -14,23 +14,23 @@ The **AutoCare REST API** 🚗🧑‍🔧  offers a comprehensive solution for m
 
 **Goals** :
 
-- Enhance problem-solving skills by tackling real-world challenges.
-- Gain hands-on experience in modern Web Applications.
+- Enhance problem-solving skills by tackling real-world challenges (appointment, invoice, and communication).
+- Gain hands-on experience in modern REST Web Applications.
 - Improve proficiency in Java and related frameworks.
-- Learn how to effectively use [GitHub](https://github.com/).
+- Learn how to effectively use Git and GitHub.
 - Develop skills in documentation and testing.
 
 ## Features
 
-- **Expose Cars data**: Retrieve detailed information about cars, including related entities like clients, maintainers, and tools.
-- **Custom JSON builder**: Generate JSON responses with a customizable JSON builder component.
+- **OpenAPI & Swagger**: documented endpoints with OpenAPI 3.0 and Swagger UI for easy API exploration.
+- **JWT Authentication**: secure API with JSON Web Tokens for user authentication.
 
 ## Technology Stack
 
 - **Framework**: [Spring Boot](https://docs.spring.io/spring-boot/index.html) v3.2 (Spring v6)
 - **Languages**: Java v17
 - **Build Tool**: [Maven](https://maven.apache.org/) v3.9
-- **Code Formatting**: [Checkstyle](https://checkstyle.sourceforge.io/) and [Spotless](https://github.com/diffplug/spotless)
+- **Code Style**: [Checkstyle](https://checkstyle.sourceforge.io/) and [Spotless](https://github.com/diffplug/spotless)
 - **Version Control**: Git
 
 ## Getting Started
@@ -55,13 +55,24 @@ _Note: Currently, the app doesn't have endpoints for CRUD operations yet (except
 
 4. **Check Endpoint**:
 
-From Web-browser (or Postman) check the following URL `http://localhost:8080/api/cars` with `GET` HTTP method :
+From Web-browser check the following URL `http://localhost:8080/swagger-ui/index.html` :
 
-![docs/endpoint-test.png](docs/endpoint-test.png)
+![img.png](docs/demo-swagger-ui.png)
+
+**Authentication Endpoint**
+
+The API provides an authentication endpoint at `/api/v1/auth`.
+
+- **Purpose:** Allows users to authenticate and obtain a token for accessing secured endpoints.
+- **How to use:**
+    - Locate the `/api/v1/auth` endpoint in the list.
+    - Expand the endpoint to view its details and try it out.
+    - Provide the required credentials (e.g., username and password) in the request body.
+    - Execute the request to receive an authentication token in the response.
 
 5. **Check Database**:
 
-We use [H2 Database](https://www.h2database.com/html/main.html) to demonstrate the app while in DEV mode. SpringBoot autoconfigures H2 database :
+Currently, there is only the [H2 Database](https://www.h2database.com/html/main.html) to demonstrate the app while in DEV mode. SpringBoot autoconfigures H2 database :
 
 Check the app's log, make sure to have something like this :
 ```bash
@@ -82,6 +93,3 @@ There you go 🎉!
 ## Contributing 
 
 If you want to dive in this project and help us to improve it, please read and follow our [contributing guidelines](./CONTRIBUTING.md).
-
-## Community
-You can join us on [Together Java Discord server](https://discord.com/channels/272761734820003841/1265407633758883870): brainstorm ideas, ask questions, and collaborate with others. Be respectful and follow the server guidelines. We have a dedicated channel for this project.

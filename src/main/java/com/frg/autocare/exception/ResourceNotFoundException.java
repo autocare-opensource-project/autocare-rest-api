@@ -1,5 +1,5 @@
 /**
- * AutoCare REST API - User repository component.
+ * AutoCare REST API - Resource not found exception.
  * Copyright (C) 2024  AutoCare REST API original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,14 +15,13 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this application.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.frg.autocare.repository;
+package com.frg.autocare.exception;
 
-import com.frg.autocare.entities.User;
-import java.util.Optional;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+public class ResourceNotFoundException extends RuntimeException {
 
-@Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-  Optional<User> findByEmail(String email);
+  private static final long serialVersionUID = 1L;
+
+  public ResourceNotFoundException(String resourceName, String fieldName, Object fieldValue) {
+    super(String.format("%s not found with %s: '%s'", resourceName, fieldName, fieldValue));
+  }
 }

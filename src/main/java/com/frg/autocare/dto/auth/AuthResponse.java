@@ -1,5 +1,5 @@
 /**
- * AutoCare REST API - User repository component.
+ * AutoCare REST API - Authentication response DTO.
  * Copyright (C) 2024  AutoCare REST API original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,14 +15,15 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this application.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.frg.autocare.repository;
+package com.frg.autocare.dto.auth;
 
-import com.frg.autocare.entities.User;
-import java.util.Optional;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-@Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-  Optional<User> findByEmail(String email);
-}
+@Schema(description = "Authentication response")
+public record AuthResponse(
+    @JsonProperty("access_token") @Schema(description = "JWT access token") String accessToken,
+    @JsonProperty("token_type") @Schema(description = "Token type", example = "Bearer")
+        String tokenType,
+    @JsonProperty("expires_in") @Schema(description = "Token expiration time in seconds")
+        Long expiresIn) {}

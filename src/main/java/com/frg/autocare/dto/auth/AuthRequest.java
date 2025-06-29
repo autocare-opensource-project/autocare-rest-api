@@ -1,5 +1,5 @@
 /**
- * AutoCare REST API - User repository component.
+ * AutoCare REST API - Authentication request DTO.
  * Copyright (C) 2024  AutoCare REST API original author or authors.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -15,14 +15,18 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this application.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.frg.autocare.repository;
+package com.frg.autocare.dto.auth;
 
-import com.frg.autocare.entities.User;
-import java.util.Optional;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
-@Repository
-public interface UserRepository extends JpaRepository<User, Long> {
-  Optional<User> findByEmail(String email);
-}
+@Schema(description = "Authentication request")
+public record AuthRequest(
+    @Email(message = "Email should be valid")
+        @NotBlank(message = "Email is required")
+        @Schema(description = "User's email address", example = "john.doe@example.com")
+        String email,
+    @NotBlank(message = "Password is required")
+        @Schema(description = "User's password", example = "password123")
+        String password) {}
