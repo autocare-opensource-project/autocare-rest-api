@@ -8,6 +8,11 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=firasrg_autocare-rest-api&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=firasrg_autocare-rest-api)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=firasrg_autocare-rest-api&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=firasrg_autocare-rest-api)
 
+[![Discord](https://img.shields.io/badge/Discord-Join%20Us-5865F2?logo=discord&logoColor=white)](https://discord.gg/mcP7eAEhMX)
+
+**Join our [Discord community](https://discord.gg/mcP7eAEhMX)!**  
+Connect with other developers, ask questions, and collaborate in real-time on the AutoCare REST API project.
+
 ## Overview
 
 The **AutoCare REST API** 🚗🧑‍🔧  offers a comprehensive solution for managing vehicle services . This developer-friendly project is designed to enhance proficiency with modern Spring applications, providing hands-on experience with real-world scenarios and best practices for backend development.
