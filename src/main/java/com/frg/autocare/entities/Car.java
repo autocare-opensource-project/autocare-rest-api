@@ -47,7 +47,7 @@ public class Car {
 
   @ManyToOne
   @JoinColumn(name = "client_id")
-  private Client client;
+  private Customer customer;
 
   @ManyToOne
   @JoinColumn(name = "maintainer_id")
