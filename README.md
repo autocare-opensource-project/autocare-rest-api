@@ -3,10 +3,10 @@
 [![Code Analysis](https://github.com/firasrg/auto-care/actions/workflows/code-analysis.yaml/badge.svg)](https://github.com/firasrg/auto-care/actions/workflows/code-analysis.yaml)
 [![java-version](https://img.shields.io/badge/Java-17-f0fc03)](https://img.shields.io/badge/Java-17-f0fc03)
 
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=firasrg_autocare-rest-api&metric=bugs)](https://sonarcloud.io/summary/new_code?id=firasrg_autocare-rest-api)
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=firasrg_autocare-rest-api&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=firasrg_autocare-rest-api)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=firasrg_autocare-rest-api&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=firasrg_autocare-rest-api)
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=firasrg_autocare-rest-api&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=firasrg_autocare-rest-api)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=autocare-opensource-project_autocare-rest-api&metric=bugs&token=34dabf0017a0224c40709716552b97da0276c684)](https://sonarcloud.io/summary/new_code?id=autocare-opensource-project_autocare-rest-api)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=autocare-opensource-project_autocare-rest-api&metric=reliability_rating&token=34dabf0017a0224c40709716552b97da0276c684)](https://sonarcloud.io/summary/new_code?id=autocare-opensource-project_autocare-rest-api)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=autocare-opensource-project_autocare-rest-api&metric=sqale_rating&token=34dabf0017a0224c40709716552b97da0276c684)](https://sonarcloud.io/summary/new_code?id=autocare-opensource-project_autocare-rest-api)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=autocare-opensource-project_autocare-rest-api&metric=vulnerabilities&token=34dabf0017a0224c40709716552b97da0276c684)](https://sonarcloud.io/summary/new_code?id=autocare-opensource-project_autocare-rest-api)
 
 [![Discord](https://img.shields.io/badge/Discord-Join%20Us-5865F2?logo=discord&logoColor=white)](https://discord.gg/mcP7eAEhMX)
 
