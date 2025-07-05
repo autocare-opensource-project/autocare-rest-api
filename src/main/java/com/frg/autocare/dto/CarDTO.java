@@ -19,14 +19,10 @@ package com.frg.autocare.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-/**
- * Data Transfer Object for Car entity.
- */
 @Schema(description = "Car information")
 public record CarDTO(
     @Schema(description = "Car ID") Long id,
     @Schema(description = "Car model", example = "Corolla") String model,
     @Schema(description = "Car make", example = "Toyota") String make,
     @Schema(description = "Client name", example = "John Doe") String clientName,
-    @Schema(description = "Maintainer name", example = "Jane Smith") String maintainerName,
-    @Schema(description = "List of tools") java.util.List<com.frg.autocare.dto.ToolDTO> tools) {}
+    @Schema(description = "Maintainer name", example = "Jane Smith") String maintainerName) {}

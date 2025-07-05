@@ -25,6 +25,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
 import java.util.Objects;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,11 +43,12 @@ public class Car {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String model;
-  private String make;
+  @NotBlank private String brand;
+
+  @NotBlank private String model;
 
   @ManyToOne
-  @JoinColumn(name = "client_id")
+  @JoinColumn(name = "customer_id")
   private Customer customer;
 
   @ManyToOne

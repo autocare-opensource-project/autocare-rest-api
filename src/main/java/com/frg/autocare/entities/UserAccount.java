@@ -27,6 +27,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -37,7 +39,6 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -53,8 +54,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 @NoArgsConstructor
 @Table(name = "user_account")
 @AllArgsConstructor
-@Builder
-public class User implements UserDetails {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class UserAccount implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -86,6 +87,13 @@ public class User implements UserDetails {
 
   @Column(name = "updated_at")
   private LocalDateTime updatedAt;
+
+  public UserAccount(String name, String email, String password, Role role) {
+    this.name = name;
+    this.email = email;
+    this.password = password;
+    this.role = role;
+  }
 
   @PrePersist
   protected void onCreate() {
@@ -130,7 +138,7 @@ public class User implements UserDetails {
 
   @Override
   @Generated(IDEs.INTELLIJ_IDEA)
-  public final boolean equals(Object o) {
+  public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null) return false;
     Class<?> oEffectiveClass =
@@ -142,13 +150,13 @@ public class User implements UserDetails {
             ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass()
             : this.getClass();
     if (thisEffectiveClass != oEffectiveClass) return false;
-    User user = (User) o;
-    return getId() != null && Objects.equals(getId(), user.getId());
+    UserAccount userAccount = (UserAccount) o;
+    return getId() != null && Objects.equals(getId(), userAccount.getId());
   }
 
   @Override
   @Generated(IDEs.INTELLIJ_IDEA)
-  public final int hashCode() {
+  public int hashCode() {
     return this instanceof HibernateProxy
         ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode()
         : getClass().hashCode();

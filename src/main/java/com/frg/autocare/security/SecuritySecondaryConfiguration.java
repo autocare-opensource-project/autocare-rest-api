@@ -52,7 +52,6 @@ public class SecuritySecondaryConfiguration {
   private String jwtSecret;
 
   @Bean
-  @SuppressWarnings("squid:S4507")
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(

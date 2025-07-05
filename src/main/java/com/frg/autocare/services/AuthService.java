@@ -20,7 +20,7 @@ package com.frg.autocare.services;
 import com.frg.autocare.dto.auth.AuthRequest;
 import com.frg.autocare.dto.auth.AuthResponse;
 import com.frg.autocare.exception.ResourceNotFoundException;
-import com.frg.autocare.repository.UserRepository;
+import com.frg.autocare.repository.UserAccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,7 +31,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthService {
 
-  private final UserRepository repository;
+  private final UserAccountRepository repository;
   private final JwtService jwtService;
   private final AuthenticationManager authenticationManager;
 

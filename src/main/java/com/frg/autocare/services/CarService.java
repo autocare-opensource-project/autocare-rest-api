@@ -18,12 +18,9 @@
 package com.frg.autocare.services;
 
 import com.frg.autocare.dto.CarDTO;
-import com.frg.autocare.dto.ToolDTO;
 import com.frg.autocare.entities.Car;
-import com.frg.autocare.entities.Tool;
 import com.frg.autocare.exception.ResourceNotFoundException;
 import com.frg.autocare.repository.CarRepository;
-import com.frg.autocare.repository.ToolRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +32,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class CarService {
 
   private final CarRepository carRepository;
-  private final ToolRepository toolRepository;
 
   @Transactional(readOnly = true)
   public List<CarDTO> getAllCars() {
@@ -58,20 +54,7 @@ public class CarService {
     // Safely handle potential null references
     String clientName = car.getCustomer() != null ? car.getCustomer().getName() : null;
     String maintainerName = car.getMaintainer() != null ? car.getMaintainer().getName() : null;
-    Long maintainerId = car.getMaintainer() != null ? car.getMaintainer().getId() : null;
 
-    List<ToolDTO> tools =
-        maintainerId != null
-            ? toolRepository.findToolsByMaintainerId(maintainerId).stream()
-                .map(this::mapToToolDTO)
-                .collect(Collectors.toList())
-            : List.of();
-
-    return new CarDTO(
-        car.getId(), car.getModel(), car.getMake(), clientName, maintainerName, tools);
-  }
-
-  private ToolDTO mapToToolDTO(Tool tool) {
-    return new ToolDTO(tool.getId(), tool.getName());
+    return new CarDTO(car.getId(), car.getModel(), car.getBrand(), clientName, maintainerName);
   }
 }

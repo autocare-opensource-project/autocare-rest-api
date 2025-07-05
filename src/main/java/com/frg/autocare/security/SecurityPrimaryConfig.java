@@ -17,7 +17,7 @@
  */
 package com.frg.autocare.security;
 
-import com.frg.autocare.repository.UserRepository;
+import com.frg.autocare.repository.UserAccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,7 +34,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class SecurityPrimaryConfig {
 
-  private final UserRepository repository;
+  private final UserAccountRepository repository;
 
   @Bean
   public UserDetailsService userDetailsService() {

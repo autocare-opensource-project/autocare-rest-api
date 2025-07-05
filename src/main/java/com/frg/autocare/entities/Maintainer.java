@@ -18,14 +18,14 @@
 package com.frg.autocare.entities;
 
 import com.frg.autocare.constants.IDEs;
+import com.frg.autocare.enums.Role;
 import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import java.util.List;
+import jakarta.persistence.Table;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,20 +33,20 @@ import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
 
 @Entity
+@Table(name = "maintainer")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class Maintainer {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+public class Maintainer extends UserAccount {
 
-  private String name;
-
-  @OneToMany(mappedBy = "maintainer")
   @ToString.Exclude
-  private List<Car> cars;
+  @OneToMany(mappedBy = "maintainer")
+  private Set<Car> cars = new HashSet<>();
+
+  public Maintainer(String name, String email, String password, Role role) {
+    super(name, email, password, role);
+  }
 
   @Override
   @Generated(IDEs.INTELLIJ_IDEA)
@@ -64,13 +64,5 @@ public class Maintainer {
     if (thisEffectiveClass != oEffectiveClass) return false;
     Maintainer that = (Maintainer) o;
     return getId() != null && Objects.equals(getId(), that.getId());
-  }
-
-  @Override
-  @Generated(IDEs.INTELLIJ_IDEA)
-  public final int hashCode() {
-    return this instanceof HibernateProxy
-        ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode()
-        : getClass().hashCode();
   }
 }

@@ -20,38 +20,30 @@ package com.frg.autocare.entities;
 import com.frg.autocare.constants.IDEs;
 import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import java.util.List;
+import jakarta.persistence.Table;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
 
 @Entity
+@Table(name = "customer")
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-public class Customer {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-
-  private String name;
+public class Customer extends UserAccount {
 
   @ToString.Exclude
   @OneToMany(mappedBy = "customer")
-  private List<Car> cars;
+  private Set<Car> cars = new HashSet<>();
 
   @Override
   @Generated(IDEs.INTELLIJ_IDEA)
-  public final boolean equals(Object o) {
+  public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null) return false;
     Class<?> oEffectiveClass =
@@ -65,13 +57,5 @@ public class Customer {
     if (thisEffectiveClass != oEffectiveClass) return false;
     Customer customer = (Customer) o;
     return getId() != null && Objects.equals(getId(), customer.getId());
-  }
-
-  @Override
-  @Generated(IDEs.INTELLIJ_IDEA)
-  public final int hashCode() {
-    return this instanceof HibernateProxy
-        ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode()
-        : getClass().hashCode();
   }
 }
