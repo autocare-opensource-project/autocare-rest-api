@@ -56,7 +56,7 @@ public class CarService {
 
   private CarDTO mapToCarDTO(Car car) {
     // Safely handle potential null references
-    String clientName = car.getClient() != null ? car.getClient().getName() : null;
+    String clientName = car.getCustomer() != null ? car.getCustomer().getName() : null;
     String maintainerName = car.getMaintainer() != null ? car.getMaintainer().getName() : null;
     Long maintainerId = car.getMaintainer() != null ? car.getMaintainer().getId() : null;
 

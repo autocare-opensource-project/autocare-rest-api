@@ -37,7 +37,7 @@ import org.hibernate.proxy.HibernateProxy;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Client {
+public class Customer {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,8 +45,8 @@ public class Client {
 
   private String name;
 
-  @OneToMany(mappedBy = "client")
   @ToString.Exclude
+  @OneToMany(mappedBy = "customer")
   private List<Car> cars;
 
   @Override
@@ -63,8 +63,8 @@ public class Client {
             ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass()
             : this.getClass();
     if (thisEffectiveClass != oEffectiveClass) return false;
-    Client client = (Client) o;
-    return getId() != null && Objects.equals(getId(), client.getId());
+    Customer customer = (Customer) o;
+    return getId() != null && Objects.equals(getId(), customer.getId());
   }
 
   @Override

@@ -17,9 +17,9 @@
  */
 package com.frg.autocare.repository;
 
-import com.frg.autocare.entities.Client;
+import com.frg.autocare.entities.Customer;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ClientRepository extends CrudRepository<Client, Long> {}
+public interface CustomerRepository extends CrudRepository<Customer, Long> {}
